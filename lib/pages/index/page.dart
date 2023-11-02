@@ -1,5 +1,6 @@
 import 'package:arb_manager/arb/arb_file.dart';
 import 'package:arb_manager/arb/manager.dart';
+import 'package:arb_manager/pages/index/widgets/add_item.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_table/a_table.dart';
@@ -55,7 +56,13 @@ class IndexPage extends StatelessWidget {
               ),
             ),
             child: Row(
-              children: [],
+              children: [
+                TextButton(
+                    onPressed: () {
+                      AddItemDialog.show(context);
+                    },
+                    child: Text('添加')),
+              ],
             ),
           ),
         ],
@@ -67,6 +74,10 @@ class IndexPage extends StatelessWidget {
     final arbManager = context.read<ArbManager>();
     final values = arbManager.arbs.values.toList();
     values.sort((a, b) => b.items.length - a.items.length);
+
+    if (values.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     final longArbFile = values.first;
 
@@ -110,69 +121,5 @@ class IndexPage extends StatelessWidget {
         rowSelectColor: Colors.yellow,
       ),
     );
-  }
-
-  Widget _createOfficialTable(BuildContext context) {
-    final arbManager = context.read<ArbManager>();
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Table(
-          defaultColumnWidth: const IntrinsicColumnWidth(),
-          columnWidths: const {
-            0: FixedColumnWidth(250),
-            1: FixedColumnWidth(250),
-            2: FixedColumnWidth(250),
-            3: FixedColumnWidth(250),
-          },
-          border: const TableBorder(
-            verticalInside: BorderSide(color: Colors.grey),
-            horizontalInside: BorderSide(color: Colors.grey),
-          ),
-          children: getTableRows(context, arbManager.arbs),
-        ),
-      ),
-    );
-  }
-
-  List<TableRow> getTableRows(
-      BuildContext context, Map<String, ArbFile> files) {
-    final keys = files.keys;
-    final values = files.values.toList();
-    values.sort((a, b) => b.items.length - a.items.length);
-
-    final longArbFile = values.first;
-
-    // countList.sort((a, b) => a - b);
-    // final rowCount = countList.last;
-
-    List<TableRow> rows = [];
-
-    // 表头
-    final keyHeader = TableCell(child: Text('字段'));
-    final headerCells = values
-        .map((e) => TableCell(
-                child: Container(
-              child: Text(e.locale),
-            )))
-        .toList();
-    TableRow header = TableRow(children: [keyHeader, ...headerCells]);
-    rows.add(header);
-
-    // 表格内容 row
-    for (int i = 0; i < longArbFile.items.length; i++) {
-      final key = longArbFile.items.keys.toList()[i];
-      // 第一列的key
-      final keyCell = TableCell(child: Text(key));
-      final valueCells = values
-          .map((e) => e.items[key]?.value ?? '')
-          .map((e) => TableCell(child: Text(e)))
-          .toList();
-      TableRow row = TableRow(children: [keyCell, ...valueCells]);
-      rows.add(row);
-    }
-    // final files[key].items.length;
-    return rows;
   }
 }

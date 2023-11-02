@@ -1,3 +1,4 @@
+import 'package:app_theme/app_theme.dart';
 import 'package:arb_manager/arb/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class GlobalProvider extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ArbManager()),
+        ChangeNotifierProvider(create: (_) => AppTheme()),
       ],
       child: child,
     );

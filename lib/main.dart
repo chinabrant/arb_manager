@@ -1,5 +1,7 @@
+import 'package:app_theme/app_theme.dart';
 import 'package:arb_manager/pages/main/page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'global/global_provider.dart';
@@ -32,10 +34,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ArbManager',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: context.watch<AppTheme>().themeData,
       home: const MainPage(),
     );
   }

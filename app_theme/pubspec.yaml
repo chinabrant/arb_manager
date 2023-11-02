@@ -1,0 +1,40 @@
+name: app_theme
+description: The theme package of Flutter project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=3.0.5 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared_preferences: ^2.0.13 # 持久化存储方案
+  provider: ^6.0.5 # 全局状态管理
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+
+  assets:
+    - assets/fonts/
+  fonts:
+    - family: IconFont
+      fonts:
+        - asset: assets/icons/iconfont.ttf
+
+
+#    - family: cmsi
+#      fonts:
+#        - asset: assets/fonts/CMSI-Medium.ttf
+#        - asset: assets/fonts/CMSI-Regular.ttf
